@@ -1,0 +1,13 @@
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/domain/GenTableColumn.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/util/VelocityUtils.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/service/GenTableServiceImpl.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/mapper/GenTableMapper.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/config/GenConfig.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/service/GenTableColumnServiceImpl.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/controller/GenController.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/service/IGenTableColumnService.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/util/VelocityInitializer.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/domain/GenTable.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/util/GenUtils.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/service/IGenTableService.java
+/Users/shencheng/idea_projects/NYHA/nyha-generator/src/main/java/com/nyha/generator/mapper/GenTableColumnMapper.java

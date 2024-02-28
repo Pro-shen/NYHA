@@ -1,0 +1,13 @@
+com/nyha/generator/service/GenTableServiceImpl.class
+com/nyha/generator/service/IGenTableColumnService.class
+com/nyha/generator/service/IGenTableService.class
+com/nyha/generator/domain/GenTableColumn.class
+com/nyha/generator/controller/GenController.class
+com/nyha/generator/mapper/GenTableMapper.class
+com/nyha/generator/service/GenTableColumnServiceImpl.class
+com/nyha/generator/util/GenUtils.class
+com/nyha/generator/util/VelocityUtils.class
+com/nyha/generator/util/VelocityInitializer.class
+com/nyha/generator/mapper/GenTableColumnMapper.class
+com/nyha/generator/config/GenConfig.class
+com/nyha/generator/domain/GenTable.class
