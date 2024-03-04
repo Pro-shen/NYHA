@@ -1,5 +1,77 @@
 # 基于NYHA心功能分级的心力衰竭患者随访信息管理系统
 
+
+
+## 需求分析
+
+>1.面向患者，面向医生，面向护士，面向医院
+>
+>
+>
+>2.住院患者进入医院，即在医院注册账号
+>
+>
+>
+>3.医生和护士原本就注册在医院中
+>
+>
+>
+>4.住院患者因为急性心力衰竭入院治疗，治疗好转出院后跟踪随访
+>
+>
+>
+>5.患者内容：（1）姓名（2）年龄 （3）症状（4）首次就诊日期（5）首次就诊医生（6）首次就诊护士（7）体重（8）下肢浮肿（9）实验室检查结果（拍CT，胸片，血生化）（10）病史（11）随访次数（12）随访频率（13）性别（14）用药情况（15）病例号：id号（16）处方（17）备注（18）患者电话（19）患者邮箱（20）患者住址(21)心理状态（22）生活方式（23）首次就诊详情
+>
+>
+>
+>6.就诊内容：（1）就诊患者id（2）就诊医生护士（3）就诊的日期（4）就诊的症状体征（水肿：容量负荷，体重增加，胸闷，气促，心率，血压）（5）实验室检查结果（拍CT，胸片，超声心动图,心电图，血生化，血常规（红细胞，白细胞，血小板，中性粒细胞，淋巴细胞），）（6）化验单的图片（影像学资料）（7）用药的依从性（是否调整用药）（8）备注（9）最近有无诱因（感染，心律失常，平时饮食，饮酒，钠摄入情况）（10）有无再住院(11)心理状态（12）生活方式（13）is_state（14）就诊id（15）NYHA心功能分级评估
+>
+>
+>
+>7.随访内容：（1）随访患者id（2）随访医生护士（3）随访的日期（4）就诊id
+>
+>
+>
+>8.医生内容：（1）医生id（2）医生名字（3）医生年龄（4）医生所在医院（5）医生职级（6）医生电话（7）医生邮箱（8）上班时间（9）医生主要研究方向（专长）（10）备注
+>
+>
+>
+>9.护士内容：（1）护士id（2）护士名字（3）护士年龄（4）护士所在医院（5）护士职级（6）护士电话（7）护士邮箱（8）上班时间（9）护士备注
+>
+>
+>
+>10.医院内容：（1）医院id（2）医院名字（3）医院地址（4）医院邮箱（5）医院电话（6）医院等级（8）医院备注
+>
+>
+>
+>11.患者信息先存在，再与医院进行绑定
+>
+>
+>
+>12.患者在随访的时候可以选择医生（首次住院不一定能选择医生）
+>
+>
+>
+>13.随访频率在出院小结，注意事项，医生的叮嘱，医护宣教里面。
+>
+>
+>
+>14.患者可以申请随访
+>
+>
+>
+>15.报表的时间跨度以月为基础单位（短期随访3个月，长期随访1年以上）（月，季度，半年，年，自定义时间跨度）
+>
+>
+>
+>16.报表能够看某一患者的一段时间的情况。
+>
+>
+>
+>17.报表能够看某一个医生，护士一段时间的情况。
+>
+>
+
 ## 功能设计
 
 患者
@@ -21,12 +93,6 @@
 护士
 
 >1.护士能够接受随访内容
-
-
-
-医院
-
->1.医院可以看所有消息
 
 
 
@@ -52,29 +118,19 @@
 
 
 
-### t_hospital(医院表)
-
->#id，医院名字，医院地址，医院邮箱，医院电话，医院等级，医院备注，is_state，创建时间，创建人id，更新时间，更新人id，租户id
->
->| 表单 | id     | name      | address    | email     | phonenumber | level | remark     | is_state | create_time | create_id | update_time | update_id | tenant_id |
->| ---- | ------ | --------- | ---------- | --------- | ----------- | ----- | ---------- | -------- | ----------- | --------- | ----------- | --------- | --------- |
->| 参数 | Bigint | Varchar30 | Varchar255 | Varchar30 | Varchar20   | int   | Varchar500 | Int      | Date        | Bigint    | Date        | Bigint    | Bigint    |
-
-
-
 ### t_visit(就诊表)
 
 >#id，就诊患者id，就诊患者名字，医生id，医生名字，护士1id，护士1名字，护士2id，护士2名字，护士数量，就诊日期，就诊的症状体征，实验室检查结果，化验单图片路径，用药的依从性（是否调整用药），备注，最近有无诱因，有无再入院，心理状态，生活方式，is_state，NYHA心功能分级评估，创建时间，创建人id，更新时间，更新人id，租户id
 >
->| 表单 | id     | patient_id | patient_name | doctor_id | doctor_name | nurse1_id | nurse1_name | nurse2_id | nurse2_name | nurse_number | visit_date | symptoms  | results    | picture_url | compliance | remark     | incentive  | in_hospital | psychology | life_style | is_state | nyha_level | is_state | create_time | create_id | update_time | update_id | tenant_id |
->| ---- | ------ | ---------- | ------------ | --------- | ----------- | --------- | ----------- | --------- | ----------- | ------------ | ---------- | --------- | ---------- | ----------- | ---------- | ---------- | ---------- | ----------- | ---------- | ---------- | -------- | ---------- | -------- | ----------- | --------- | ----------- | --------- | --------- |
->| 参数 | Bigint | Bigint     | Varchar20    | Bigint    | Varchar20   | Bigint    | Varchar20   | Bigint    | Varchar20   | Bigint       | Date       | Varchar50 | Varchar255 | varchar500  | int        | Varchar500 | varchar100 | Int         | Varchar255 | varchar500 | int      | varchar500 | Int      | Date        | Bigint    | Date        | Bigint    | Bigint    |
+>| 表单 | id     | patient_id | patient_name | doctor_id | doctor_name | nurse1_id | nurse1_name | nurse2_id | nurse2_name | nurse_number | visit_date | symptoms  | results    | picture_url | compliance | remark     | incentive  | in_hospital | psychology | life_style | is_state | nyha_level | is_state | nyha      | create_time | create_id | update_time | update_id | tenant_id |
+>| ---- | ------ | ---------- | ------------ | --------- | ----------- | --------- | ----------- | --------- | ----------- | ------------ | ---------- | --------- | ---------- | ----------- | ---------- | ---------- | ---------- | ----------- | ---------- | ---------- | -------- | ---------- | -------- | --------- | ----------- | --------- | ----------- | --------- | --------- |
+>| 参数 | Bigint | Bigint     | Varchar20    | Bigint    | Varchar20   | Bigint    | Varchar20   | Bigint    | Varchar20   | Bigint       | Date       | Varchar50 | Varchar255 | varchar500  | int        | Varchar500 | varchar100 | Int         | Varchar255 | varchar500 | int      | varchar500 | Int      | Vachar500 | Date        | Bigint    | Date        | Bigint    | Bigint    |
 
 
 
 ### t_follow(随访表)
 
->#id，患者id，患者名字，医生id，医生名字，时间，就诊id，创建时间，创建人id，更新时间，更新人id，租户id
+>#id，患者id，患者名字，医生id，医生名字，时间，就诊id，is_state，创建时间，创建人id，更新时间，更新人id，租户id
 >
 >| 表单 | id     | patient_id | patient_name | doctor_id | doctor_name | date | visit_id | is_state | create_time | create_id | update_time | update_id | tenant_id |
 >| ---- | ------ | ---------- | ------------ | --------- | ----------- | ---- | -------- | -------- | ----------- | --------- | ----------- | --------- | --------- |
