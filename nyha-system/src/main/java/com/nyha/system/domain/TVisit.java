@@ -1,8 +1,11 @@
 package com.nyha.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nyha.common.annotation.Excel;
 import com.nyha.common.core.domain.BaseEntity;
 
 import java.util.Date;
+import java.util.List;
 
 public class TVisit extends BaseEntity {
 
@@ -19,6 +22,7 @@ public class TVisit extends BaseEntity {
     /**
      * 就诊患者名字
      */
+    @Excel(name = "患者名称")
     private String patientName;
 
     /**
@@ -29,6 +33,7 @@ public class TVisit extends BaseEntity {
     /**
      * 医生名字
      */
+    @Excel(name = "医生名称")
     private String doctorName;
 
     /**
@@ -39,6 +44,7 @@ public class TVisit extends BaseEntity {
     /**
      * 护士1名字
      */
+    @Excel(name = "护士1名称")
     private String nurse1Name;
 
     /**
@@ -49,6 +55,7 @@ public class TVisit extends BaseEntity {
     /**
      * 护士2名字
      */
+    @Excel(name = "护士2名称")
     private String nurse2Name;
 
     /**
@@ -59,16 +66,19 @@ public class TVisit extends BaseEntity {
     /**
      * 就诊日期
      */
+    @Excel(name = "就诊日期")
     private Date visitDate;
 
     /**
      * 就诊的症状体征
      */
+    @Excel(name = "就诊的症状体征")
     private String symptoms;
 
     /**
      * 实验室检查结果
      */
+    @Excel(name = "实验室检查结果")
     private String results;
 
     /**
@@ -79,31 +89,37 @@ public class TVisit extends BaseEntity {
     /**
      * 用药的依从性
      */
+    @Excel(name = "用药的依从性")
     private Integer compliance;
 
     /**
      * 备注
      */
+    @Excel(name = "备注")
     private String remark;
 
     /**
      * 最近有无诱因
      */
+    @Excel(name = "最近有无诱因")
     private String incentive;
 
     /**
      * 有无再入院
      */
+    @Excel(name = "有无再入院")
     private Integer inHospital;
 
     /**
      * 心理状态
      */
+    @Excel(name = "心理状态")
     private String psychology;
 
     /**
      * 生活方式
      */
+    @Excel(name = "生活方式")
     private String lifeStyle;
 
     /**
@@ -114,6 +130,8 @@ public class TVisit extends BaseEntity {
     /**
      * 创建时间
      */
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
     private Date createTime;
 
     /**
@@ -124,6 +142,8 @@ public class TVisit extends BaseEntity {
     /**
      * 更新时间
      */
+    @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
     private Date updateTime;
 
     /**
@@ -139,12 +159,19 @@ public class TVisit extends BaseEntity {
     /**
      * NYHA心功能分级评估
      */
+    @Excel(name = "NYHA心功能分级评估")
     private String nyha;
 
     /**
      * 就诊状态
      */
+    @Excel(name = "就诊状态")
     private Integer visitStatus;
+
+    /**
+     * ids
+     */
+    private List<Long> ids;
 
     public Long getId() {
         return id;
@@ -374,5 +401,13 @@ public class TVisit extends BaseEntity {
 
     public void setVisitStatus(Integer visitStatus) {
         this.visitStatus = visitStatus;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 }

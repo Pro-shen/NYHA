@@ -131,12 +131,11 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
+          Cookies.set("username", this.loginForm.username, { expires: 30 });
           if (this.loginForm.rememberMe) {
-            Cookies.set("username", this.loginForm.username, { expires: 30 });
             Cookies.set("password", encrypt(this.loginForm.password), { expires: 30 });
             Cookies.set('rememberMe', this.loginForm.rememberMe, { expires: 30 });
           } else {
-            Cookies.remove("username");
             Cookies.remove("password");
             Cookies.remove('rememberMe');
           }
