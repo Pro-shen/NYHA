@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nyha.system.mapper.TVisitDetailsMapper">
+
+    <resultMap type="TVisit" id="TVisitResult">
+        <id property="id" column="id"/>
+        <result property="patientId" column="patient_id"/>
+        <result property="patientName" column="patient_name"/>
+        <result property="doctorId" column="doctor_id"/>
+        <result property="doctorName" column="doctor_name"/>
+        <result property="nurse1Id" column="nurse1_id"/>
+        <result property="nurse1Name" column="nurse1_name"/>
+        <result property="nurse2Id" column="nurse2_id"/>
+        <result property="nurse2Name" column="nurse2_name"/>
+        <result property="nurseNumber" column="nurse_number"/>
+        <result property="visitDate" column="visit_date"/>
+        <result property="symptoms" column="symptoms"/>
+        <result property="results" column="results"/>
+        <result property="pictureUrl" column="picture_url"/>
+        <result property="compliance" column="compliance"/>
+        <result property="remark" column="remark"/>
+        <result property="incentive" column="incentive"/>
+        <result property="inHospital" column="in_hospital"/>
+        <result property="psychology" column="psychology"/>
+        <result property="lifeStyle" column="life_style"/>
+        <result property="isState" column="is_state"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="nyha" column="nyha"/>
+        <result property="visitStatus" column="visit_status"/>
+    </resultMap>
+
+    <sql id="selectTVisitVo">
+        select tv.id,
+               tv.patient_id,
+               tv.patient_name,
+               tv.doctor_id,
+               tv.doctor_name,
+               tv.nurse1_id,
+               tv.nurse1_name,
+               tv.nurse2_id,
+               tv.nurse2_name,
+               tv.nurse_number,
+               tv.visit_date,
+               tv.symptoms,
+               tv.results,
+               tv.picture_url,
+               tv.compliance,
+               tv.remark,
+               tv.incentive,
+               tv.in_hospital,
+               tv.psychology,
+               tv.life_style,
+               tv.is_state,
+               tv.create_time,
+               tv.create_id,
+               tv.update_time,
+               tv.update_id,
+               tv.tenant_id,
+               tv.nyha,
+               tv.visit_status
+        from t_visit tv
+    </sql>
+
+    <select id="list" parameterType="TVisit" resultMap="TVisitResult">
+        <include refid="selectTVisitVo"></include>
+        <where>
+            tv.is_state = 1
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND tv.create_time &gt;= #{params.beginTime}
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND tv.create_time &lt;= #{params.endTime}
+            </if>
+            ${params.dataScope}
+        </where>
+    </select>
+
+    <select id="selectTVisitListById" parameterType="Long" resultMap="TVisitResult">
+        <include refid="selectTVisitVo"></include>
+        <where>
+            tv.id = #{id}
+            and tv.is_state = 1
+        </where>
+    </select>
+
+    <insert id="add" parameterType="TVisit" useGeneratedKeys="true" keyProperty="id">
+        insert into t_visit(
+        <if test="symptoms != null and symptoms != ''">symptoms,</if>
+        <if test="compliance != null and compliance != ''">compliance,</if>
+        <if test="psychology != null and psychology != ''">psychology,</if>
+        <if test="lifeStyle != null and lifeStyle != ''">life_style,</if>
+        <if test="patientId != null and patientId != ''">patient_id,</if>
+        <if test="patientName != null and patientName != ''">patient_name,</if>
+        <if test="visitStatus != null and visitStatus != ''">visit_status,</if>
+        <if test="incentive != null and incentive != ''">incentive,</if>
+        <if test="nyha != null and nyha != ''">nyha,</if>
+        <if test="isState != null">is_state,</if>
+        create_time
+        )
+        values (
+        <if test="symptoms != null and symptoms != ''">#{symptoms},</if>
+        <if test="compliance != null and compliance != ''">#{compliance},</if>
+        <if test="psychology != null and psychology != ''">#{psychology},</if>
+        <if test="lifeStyle != null and lifeStyle != ''">#{lifeStyle},</if>
+        <if test="patientId != null and patientId != ''">#{patientId},</if>
+        <if test="patientName != null and patientName != ''">#{patientName},</if>
+        <if test="visitStatus != null and visitStatus != ''">#{visitStatus},</if>
+        <if test="incentive != null and incentive != ''">#{incentive},</if>
+        <if test="nyha != null and nyha != ''">#{nyha},</if>
+        <if test="isState != null">#{isState},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="edit" parameterType="TVisit">
+        update t_visit
+        <set>
+            <if test="symptoms != null and symptoms != ''">symptoms = #{symptoms},</if>
+            <if test="compliance != null and compliance != ''">compliance = #{compliance},</if>
+            <if test="psychology != null and psychology != ''">psychology = #{psychology},</if>
+            <if test="lifeStyle != null and lifeStyle != ''">life_style = #{lifeStyle},</if>
+            <if test="incentive != null and incentive != ''">incentive = #{incentive},</if>
+            <if test="nyha != null and nyha != ''">nyha = #{nyha},</if>
+            <if test="results != null and results != ''">results = #{results},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove" parameterType="TVisit">
+        delete from t_visit where id = #{id}
+    </delete>
+
+    <delete id="removeByIds" parameterType="Long">
+        delete from t_visit where id = #{id}
+    </delete>
+
+</mapper>
