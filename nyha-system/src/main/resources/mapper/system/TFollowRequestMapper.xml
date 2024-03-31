@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nyha.system.mapper.TFollowRequestMapper">
+
+<!--    list-->
+    <resultMap type="TFollow" id="TFollowResult">
+        <id property="id" column="id"/>
+        <result property="patientId" column="patient_id"/>
+        <result property="patientName" column="patient_name"/>
+        <result property="doctorId" column="doctor_id"/>
+        <result property="doctorName" column="doctor_name"/>
+        <result property="date" column="date"/>
+        <result property="visitId" column="visit_id"/>
+        <result property="isState" column="is_state"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="followStatus" column="follow_status"/>
+    </resultMap>
+
+    <sql id="selectTFollowVo">
+        select tf.id,tf.patient_id,tf.patient_name,tf.doctor_id,tf.doctor_name,tf.date,tf.visit_id,tf.is_state,
+               tf.create_time,tf.create_id,tf.update_time,tf.update_id,tf.tenant_id,tf.follow_status from t_follow tf
+    </sql>
+
+    <select id="list" parameterType="TFollow" resultMap="TFollowResult">
+        <include refid="selectTFollowVo"></include>
+        <where>
+            tf.is_state = 1
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND tf.create_time &gt;= #{params.beginTime}
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND tf.create_time &lt;= #{params.endTime}
+            </if>
+            ${params.dataScope}
+        </where>
+    </select>
+
+
+</mapper>
