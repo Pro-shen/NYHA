@@ -35,12 +35,13 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column prop="patientName" label="随访人" width="100"></el-table-column>
-      <el-table-column label="随访状态" width="170" align="center">
+      <el-table-column prop="date" label="随访时间" width="100"></el-table-column>
+      <el-table-column label="随访状态" width="100" align="center">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.t_visit_visit_status" :value="scope.row.visitStatus" />
+          <dict-tag :options="dict.type.t_follow_follow_status" :value="scope.row.followStatus" />
         </template>
       </el-table-column>
-      <el-table-column prop="doctorName" label="医生名字" width="230"></el-table-column>
+      <el-table-column prop="doctorName" label="医生名字" width="150"></el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="150"></el-table-column>
       <el-table-column prop="updateTime" label="更新时间" width="150"></el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -59,18 +60,10 @@
     <!-- 添加或修改菜单配置对话框 -->
     <el-dialog title="就诊请求" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <!-- <el-form-item label="症状体征" prop="symptoms">
-          <el-input v-model="form.symptoms" placeholder="请输入症状体征" />
+        <el-form-item label="请求日期" prop="date">
+          <el-date-picker v-model="form.date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
+          </el-date-picker>
         </el-form-item>
-        <el-form-item label="用药情况" prop="compliance">
-          <el-input v-model="form.compliance" placeholder="请输入用药情况" />
-        </el-form-item>
-        <el-form-item label="心理状态" prop="psychology">
-          <el-input v-model="form.psychology" placeholder="请输入心理状态" />
-        </el-form-item>
-        <el-form-item label="生活方式" prop="lifeStyle">
-          <el-input v-model="form.lifeStyle" placeholder="请输入生活方式" />
-        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -85,7 +78,7 @@
 import { list, getUserId, add, selectTFollowListById, edit, remove } from "@/api/nyha/tFollowRequest"
 import Cookies from "js-cookie";
 export default {
-  dicts: ['t_visit_visit_status'],
+  dicts: ['t_follow_follow_status'],
   data() {
     return {
       userName: undefined,
@@ -109,19 +102,11 @@ export default {
       refreshTable: true,
       isExpandAll: true,
       ids: [],
-      symptomsList: [],
+      dateList: [],
+      patientNameList: [],
       rules: {
-        symptoms: [
-          { required: true, message: "症状体征不能为空", trigger: "blur" }
-        ],
-        compliance: [
-          { required: true, message: "用药情况不能为空", trigger: "blur" }
-        ],
-        psychology: [
-          { required: true, message: "心理状态不能为空", trigger: "blur" }
-        ],
-        lifeStyle: [
-          { required: true, message: "生活方式不能为空", trigger: "blur" }
+        date: [
+          { required: true, message: "请求日期不能为空", trigger: "blur" }
         ],
       }
     }
@@ -145,35 +130,131 @@ export default {
         this.total = response.total
       })
     },
-    handleSelectionChange(selection){
-      
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.id)
+      this.dateList = selection.map(item => item.date)
+      this.patientNameList = selection.map(item => item.patientName)
+      this.single = selection.length != 1
+      this.multiple = !selection.length
     },
-    handleAdd(){
-
+    handleAdd() {
+      this.open = true
+      this.add = true
+      this.reset()
     },
-    handleUpdate(row){
-
+    handleUpdate(row) {
+      this.add = false
+      this.reset()
+      this.open = true
+      const id = row.id || this.ids
+      this.form.id = id
+      selectTFollowListById(id).then(res => {
+        this.form = res.data[0]
+      })
     },
-    submitForm(){
-
+    submitForm() {
+      this.form.isState = 1
+      this.form.patientId = this.userId
+      this.form.patientName = this.userName
+      this.form.followStatus = 0
+      this.open = false
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.add) {
+            add(this.form).then(res => {
+              if (res.data == 0) {
+                this.$modal.msgError("添加失败")
+              } else if (res.data == 1) {
+                this.$modal.msgSuccess("添加成功")
+                this.getList();
+              }
+            })
+          } else {
+            edit(this.form).then(res => {
+              if (res.data == 0) {
+                this.$modal.msgError("修改失败")
+              } else if (res.data == 1) {
+                this.$modal.msgSuccess("修改成功")
+                this.getList();
+              }
+            })
+          }
+        }
+      })
     },
-    cancel(){
-
+    cancel() {
+      this.open = false
     },
-    handleDelete(row){
-
+    handleDelete(row) {
+      var that = this
+      const ids = row.id || this.ids
+      const dateList = row.date || this.dateList
+      const patientNameList = row.patientName || this.patientNameList
+      if (row.id == 0) {
+        ids.push(0)
+      }
+      var str = ""
+      var listOrInt = 1
+      for (var i = 0; i < ids.length; i++) {
+        if (i == ids.length - 1) {
+          str = str + "日期为:" + dateList[i] + "访客为:" + patientNameList[i]
+        } else {
+          str = str + "日期为:" + dateList[i] + "访客为:" + patientNameList[i] + ","
+        }
+      }
+      if (str == "") {
+        listOrInt = 0
+        str = "日期为:" + dateList + "访客为:" + patientNameList
+      }
+      this.$modal.confirm('是否确认删除"' + str + '"的数据项？').then(function () {
+        var data = {}
+        if (listOrInt == 0) {
+          data = {
+            id: ids
+          }
+        } else {
+          data = {
+            ids: ids
+          }
+        }
+        remove(data).then(res => {
+          if (res.data.ids.length == 0) {
+            that.$modal.msgSuccess("删除成功")
+          } else {
+            var resStr = ""
+            for (i = 0; i < res.data.ids.length; i++) {
+              resStr = resStr + res.data.ids[i].symptoms + ",";
+            }
+            that.$modal.msgError("删除" + resStr + "失败")
+          }
+          that.getList()
+        })
+      })
     },
-    handleExport(){
-
+    handleExport() {
+      this.download('/nyha/tFollowRequest/export', {
+        ...this.queryParams
+      }, `寻访_${new Date().getTime()}.xlsx`)
     },
-    handleQuery(){
-
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
     },
-    resetQuery(){
-
+    resetQuery() {
+      this.dateRange = [];
+      this.resetForm("queryForm");
+      this.queryParams.pageNum = 1;
+      this.$refs.tables.sort(this.defaultSort.prop, this.defaultSort.order)
     },
-    reset(){
-
+    reset() {
+      this.form = {
+        symptoms: undefined,
+        compliance: undefined,
+        psychology: undefined,
+        lifeStyle: undefined,
+        isState: undefined
+      };
+      this.resetForm("form");
     }
   }
 }

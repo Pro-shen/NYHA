@@ -1,8 +1,11 @@
 package com.nyha.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nyha.common.annotation.Excel;
 import com.nyha.common.core.domain.BaseEntity;
 
 import java.util.Date;
+import java.util.List;
 
 public class TFollow extends BaseEntity {
 
@@ -19,6 +22,7 @@ public class TFollow extends BaseEntity {
     /**
      * 患者名字
      */
+    @Excel(name = "患者名称")
     private String patientName;
 
     /**
@@ -29,11 +33,14 @@ public class TFollow extends BaseEntity {
     /**
      * 医生名字
      */
+    @Excel(name = "医生名称")
     private String doctorName;
 
     /**
      * 时间
      */
+    @Excel(name = "寻访日期")
+    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
     private Date date;
 
     /**
@@ -49,6 +56,8 @@ public class TFollow extends BaseEntity {
     /**
      * 创建时间
      */
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
     private Date createTime;
 
     /**
@@ -59,6 +68,8 @@ public class TFollow extends BaseEntity {
     /**
      * 更新时间
      */
+    @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
     private Date updateTime;
 
     /**
@@ -75,6 +86,11 @@ public class TFollow extends BaseEntity {
      * 随访状态
      */
     private Integer followStatus;
+
+    /**
+     * ids
+     */
+    private List<Long> ids;
 
     public Long getId() {
         return id;
@@ -190,5 +206,13 @@ public class TFollow extends BaseEntity {
 
     public void setFollowStatus(Integer followStatus) {
         this.followStatus = followStatus;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 }

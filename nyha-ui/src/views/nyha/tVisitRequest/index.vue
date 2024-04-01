@@ -35,7 +35,8 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column prop="patientName" label="就诊人" width="100"></el-table-column>
-      <el-table-column label="就诊状态" width="170" align="center">
+      <el-table-column prop="date" label="就诊时间" width="100"></el-table-column>
+      <el-table-column label="就诊状态" width="100" align="center">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.t_visit_visit_status" :value="scope.row.visitStatus" />
         </template>

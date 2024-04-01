@@ -1,12 +1,11 @@
 package com.nyha.system.mapper;
 
 import com.nyha.system.domain.TFollow;
-import com.nyha.system.domain.TVisit;
 import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.List;
 
-public interface TFollowRequestMapper {
+public interface TFollowDetailsMapper {
 
     public List<TFollow> list(TFollow tFollow);
 

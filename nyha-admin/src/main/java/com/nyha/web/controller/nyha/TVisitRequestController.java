@@ -40,6 +40,7 @@ public class TVisitRequestController extends BaseController {
         ajaxResult.put("data",itVisitRequestService.getUserId(userName));
         return ajaxResult;
     }
+
     @PreAuthorize("@ss.hasAnyPermi('nyha:tVisitRequest:add')")
     @Log(title = "就诊增加", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -82,7 +83,7 @@ public class TVisitRequestController extends BaseController {
     {
         List<TVisit> list = itVisitRequestService.list(tVisit);
         ExcelUtil<TVisit> util = new ExcelUtil<TVisit>(TVisit.class);
-        util.exportExcel(response, list, "菜单表单");
+        util.exportExcel(response, list, "就诊表单");
     }
 
 }

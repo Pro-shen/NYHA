@@ -3,10 +3,9 @@ package com.nyha.system.service.impl;
 import com.nyha.common.annotation.DataScope;
 import com.nyha.common.core.domain.entity.SysUser;
 import com.nyha.system.domain.TFollow;
-import com.nyha.system.domain.TVisit;
 import com.nyha.system.mapper.SysUserMapper;
-import com.nyha.system.mapper.TFollowRequestMapper;
-import com.nyha.system.service.ITFollowRequestService;
+import com.nyha.system.mapper.TFollowApprovalMapper;
+import com.nyha.system.service.ITFollowApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TFollowRequestServiceImpl implements ITFollowRequestService {
+public class TFollowApprovalServiceImpl implements ITFollowApprovalService {
 
     @Autowired
-    private TFollowRequestMapper tFollowRequestMapper;
+    private TFollowApprovalMapper tFollowApprovalMapper;
 
     @Autowired
     private SysUserMapper sysUserMapper;
@@ -25,7 +24,7 @@ public class TFollowRequestServiceImpl implements ITFollowRequestService {
     @Override
     @DataScope(deptAlias = "tf")
     public List<TFollow> list(TFollow tFollow) {
-        return tFollowRequestMapper.list(tFollow);
+        return tFollowApprovalMapper.list(tFollow);
     }
 
     @Override
@@ -35,17 +34,17 @@ public class TFollowRequestServiceImpl implements ITFollowRequestService {
 
     @Override
     public int add(TFollow tFollow) {
-        return tFollowRequestMapper.add(tFollow);
+        return tFollowApprovalMapper.add(tFollow);
     }
 
     @Override
     public List<TFollow> selectTVisitListById(Long id) {
-        return tFollowRequestMapper.selectTFollowListById(id);
+        return tFollowApprovalMapper.selectTFollowListById(id);
     }
 
     @Override
     public int edit(TFollow tFollow) {
-        return tFollowRequestMapper.edit(tFollow);
+        return tFollowApprovalMapper.edit(tFollow);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class TFollowRequestServiceImpl implements ITFollowRequestService {
         List<Long> resByIdsList = new ArrayList<>();
         TFollow tFollow1 = new TFollow();
         if (tFollow.getId() != null) {
-            int res = tFollowRequestMapper.remove(tFollow);
+            int res = tFollowApprovalMapper.remove(tFollow);
             if (res == 0) {
                 resByIdsList.add(tFollow.getId());
                 tFollow1.setIds(resByIdsList);
@@ -65,7 +64,7 @@ public class TFollowRequestServiceImpl implements ITFollowRequestService {
         } else if (!tFollow.getIds().isEmpty()) {
             int resById;
             for (int i = 0; i < tFollow.getIds().size(); i++) {
-                resById = tFollowRequestMapper.removeByIds(tFollow.getIds().get(i));
+                resById = tFollowApprovalMapper.removeByIds(tFollow.getIds().get(i));
                 if (resById == 0) {
                     resByIdsList.add(tFollow.getIds().get(i));
                 }

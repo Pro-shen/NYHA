@@ -33,6 +33,7 @@
         <result property="tenantId" column="tenant_id"/>
         <result property="nyha" column="nyha"/>
         <result property="visitStatus" column="visit_status"/>
+        <result property="date" column="date"/>
     </resultMap>
 
     <sql id="selectTVisitVo">
@@ -63,7 +64,8 @@
                tv.update_id,
                tv.tenant_id,
                tv.nyha,
-               tv.visit_status
+               tv.visit_status,
+               tv.date
         from t_visit tv
     </sql>
 

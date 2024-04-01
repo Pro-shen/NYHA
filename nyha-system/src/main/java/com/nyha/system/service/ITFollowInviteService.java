@@ -5,7 +5,7 @@ import com.nyha.system.domain.TFollow;
 
 import java.util.List;
 
-public interface ITFollowRequestService {
+public interface ITFollowInviteService {
 
     public List<TFollow> list(TFollow tFollow);
 

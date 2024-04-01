@@ -128,6 +128,13 @@ public class TVisit extends BaseEntity {
     private Integer isState;
 
     /**
+     * 时间
+     */
+    @Excel(name = "就诊日期")
+    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
+    private Date date;
+
+    /**
      * 创建时间
      */
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -409,5 +416,13 @@ public class TVisit extends BaseEntity {
 
     public void setIds(List<Long> ids) {
         this.ids = ids;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
