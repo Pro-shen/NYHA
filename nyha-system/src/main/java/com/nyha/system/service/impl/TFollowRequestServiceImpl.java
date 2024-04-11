@@ -25,6 +25,11 @@ public class TFollowRequestServiceImpl implements ITFollowRequestService {
     @Override
     @DataScope(deptAlias = "tf")
     public List<TFollow> list(TFollow tFollow) {
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(1);
+        list.add(3);
+        tFollow.setFollowStatusList(list);
         return tFollowRequestMapper.list(tFollow);
     }
 

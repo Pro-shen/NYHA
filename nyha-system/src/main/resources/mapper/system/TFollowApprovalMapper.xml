@@ -30,6 +30,10 @@
         <include refid="selectTFollowVo"></include>
         <where>
             tf.is_state = 1
+            AND tf.follow_status in
+            <foreach collection="followStatusList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND tf.create_time &gt;= #{params.beginTime}
             </if>

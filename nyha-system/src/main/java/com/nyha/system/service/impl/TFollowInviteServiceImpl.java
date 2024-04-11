@@ -24,6 +24,9 @@ public class TFollowInviteServiceImpl implements ITFollowInviteService {
     @Override
     @DataScope(deptAlias = "tf")
     public List<TFollow> list(TFollow tFollow) {
+        List<Integer> list = new ArrayList<>();
+        list.add(3);
+        tFollow.setFollowStatusList(list);
         return tFollowInviteMapper.list(tFollow);
     }
 

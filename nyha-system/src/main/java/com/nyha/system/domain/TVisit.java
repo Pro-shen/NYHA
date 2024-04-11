@@ -131,14 +131,14 @@ public class TVisit extends BaseEntity {
      * 时间
      */
     @Excel(name = "就诊日期")
-    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date date;
 
     /**
      * 创建时间
      */
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
-    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date createTime;
 
     /**
@@ -150,7 +150,7 @@ public class TVisit extends BaseEntity {
      * 更新时间
      */
     @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
-    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
 
     /**
@@ -172,13 +172,16 @@ public class TVisit extends BaseEntity {
     /**
      * 就诊状态
      */
-    @Excel(name = "就诊状态")
+    @Excel(name = "就诊状态", readConverterExp = "0=未就诊,1=待就诊,2=已就诊")
     private Integer visitStatus;
 
     /**
      * ids
      */
     private List<Long> ids;
+
+
+    private List<Integer> visitStatusList;
 
     public Long getId() {
         return id;
@@ -424,5 +427,13 @@ public class TVisit extends BaseEntity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<Integer> getVisitStatusList() {
+        return visitStatusList;
+    }
+
+    public void setVisitStatusList(List<Integer> visitStatusList) {
+        this.visitStatusList = visitStatusList;
     }
 }

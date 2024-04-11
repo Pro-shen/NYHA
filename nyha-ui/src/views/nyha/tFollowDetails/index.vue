@@ -18,7 +18,7 @@
       </el-col> -->
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
-          v-hasPermi="['nyha:tFollowDetails:edit']">修改</el-button>
+          v-hasPermi="['nyha:tFollowDetails:edit']">填写结果</el-button>
       </el-col>
       <!-- <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
@@ -47,7 +47,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['nyha:tFollowDetails:edit']">修改</el-button>
+            v-hasPermi="['nyha:tFollowDetails:edit']">填写结果</el-button>
           <!-- <el-button v-if="scope.row.parentId != 0" size="mini" type="text" icon="el-icon-delete"
             @click="handleDelete(scope.row)" v-hasPermi="['nyha:tFollowDetails:remove']">删除</el-button> -->
         </template>

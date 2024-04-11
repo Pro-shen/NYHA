@@ -24,6 +24,10 @@ public class TFollowApprovalServiceImpl implements ITFollowApprovalService {
     @Override
     @DataScope(deptAlias = "tf")
     public List<TFollow> list(TFollow tFollow) {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        tFollow.setFollowStatusList(list);
         return tFollowApprovalMapper.list(tFollow);
     }
 

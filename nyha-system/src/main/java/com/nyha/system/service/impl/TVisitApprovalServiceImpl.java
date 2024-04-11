@@ -24,6 +24,10 @@ public class TVisitApprovalServiceImpl implements ITVisitApprovalService {
     @Override
     @DataScope(deptAlias = "tv")
     public List<TVisit> list(TVisit tVisit) {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        tVisit.setVisitStatusList(list);
         return tVisitApprovalMapper.list(tVisit);
     }
 

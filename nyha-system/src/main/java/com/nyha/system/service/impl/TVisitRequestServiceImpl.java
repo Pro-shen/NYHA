@@ -24,6 +24,10 @@ public class TVisitRequestServiceImpl implements ITVisitRequestService {
     @Override
     @DataScope(deptAlias = "tv")
     public List<TVisit> list(TVisit tVisit) {
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(1);
+        tVisit.setVisitStatusList(list);
         return tVisitRequestMapper.list(tVisit);
     }
 

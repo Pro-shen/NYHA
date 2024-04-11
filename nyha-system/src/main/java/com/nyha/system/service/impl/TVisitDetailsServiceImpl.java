@@ -24,6 +24,9 @@ public class TVisitDetailsServiceImpl implements ITVisitDetailsService {
     @Override
     @DataScope(deptAlias = "tv")
     public List<TVisit> list(TVisit tVisit) {
+        List<Integer> list = new ArrayList<>();
+        list.add(2);
+        tVisit.setVisitStatusList(list);
         return tVisitDetailsMapper.list(tVisit);
     }
 

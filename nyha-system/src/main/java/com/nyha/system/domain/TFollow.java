@@ -40,7 +40,7 @@ public class TFollow extends BaseEntity {
      * 时间
      */
     @Excel(name = "寻访日期")
-    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date date;
 
     /**
@@ -57,7 +57,7 @@ public class TFollow extends BaseEntity {
      * 创建时间
      */
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
-    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date createTime;
 
     /**
@@ -69,7 +69,7 @@ public class TFollow extends BaseEntity {
      * 更新时间
      */
     @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
-    @JsonFormat( pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai" )
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
 
     /**
@@ -85,6 +85,7 @@ public class TFollow extends BaseEntity {
     /**
      * 随访状态
      */
+    @Excel(name = "随访状态", readConverterExp = "0=未随访,1=待随访,2=已随访,3=已邀请")
     private Integer followStatus;
 
     /**
@@ -141,6 +142,8 @@ public class TFollow extends BaseEntity {
      * 生活方式
      */
     private String lifeStyle;
+
+    public List<Integer> followStatusList;
 
     public String getIncentive() {
         return incentive;
@@ -307,7 +310,6 @@ public class TFollow extends BaseEntity {
     }
 
 
-
     public String getSymptoms() {
         return symptoms;
     }
@@ -346,5 +348,13 @@ public class TFollow extends BaseEntity {
 
     public void setVisitStatus(Integer visitStatus) {
         this.visitStatus = visitStatus;
+    }
+
+    public List<Integer> getFollowStatusList() {
+        return followStatusList;
+    }
+
+    public void setFollowStatusList(List<Integer> followStatusList) {
+        this.followStatusList = followStatusList;
     }
 }

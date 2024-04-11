@@ -29,6 +29,9 @@ public class TFollowDetailsServiceImpl implements ITFollowDetailsService {
     @Override
     @DataScope(deptAlias = "tf")
     public List<TFollow> list(TFollow tFollow) {
+        List<Integer> list = new ArrayList<>();
+        list.add(2);
+        tFollow.setFollowStatusList(list);
         return tFollowDetailsMapper.list(tFollow);
     }
 

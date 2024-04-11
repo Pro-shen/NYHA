@@ -73,6 +73,7 @@
         <include refid="selectTVisitVo"></include>
         <where>
             tv.is_state = 1
+            AND tv.visit_status = 2
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND tv.create_time &gt;= #{params.beginTime}
             </if>
@@ -86,6 +87,10 @@
     <select id="selectTVisitList" parameterType="TVisit" resultMap="TVisitResult">
         <include refid="selectTVisitVo"/>
         <where>
+            AND tv.visit_status in
+            <foreach collection="visitStatusList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
             <if test="patientId != null and patientId != ''">
                 AND tv.patient_id = #{patientId}
             </if>
