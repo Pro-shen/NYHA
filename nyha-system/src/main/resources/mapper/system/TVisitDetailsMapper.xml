@@ -83,6 +83,45 @@
         </where>
     </select>
 
+    <select id="selectTVisitList" parameterType="TVisit" resultMap="TVisitResult">
+        <include refid="selectTVisitVo"/>
+        <where>
+            <if test="patientId != null and patientId != ''">
+                AND tv.patient_id = #{patientId}
+            </if>
+            <if test="patientName != null and patientName != ''">
+                AND tv.patient_name = #{patientName}
+            </if>
+            <if test="doctorId != null and doctorId != ''">
+                AND tv.doctor_id = #{doctorId}
+            </if>
+            <if test="doctorName != null and doctorName != ''">
+                AND tv.doctor_name = #{doctorName}
+            </if>
+            <if test="nyha != null and nyha != ''">
+                AND tv.nyha = #{nyha}
+            </if>
+            <if test="incentive != null and incentive != ''">
+                AND tv.incentive = #{incentive}
+            </if>
+            <if test="results != null and results != ''">
+                AND tv.results = #{results}
+            </if>
+            <if test="psychology != null and psychology != ''">
+                AND tv.psychology = #{psychology}
+            </if>
+            <if test="compliance != null and compliance != ''">
+                AND tv.compliance = #{compliance}
+            </if>
+            <if test="symptoms != null and symptoms != ''">
+                AND tv.symptoms = #{symptoms}
+            </if>
+            <if test="isState != null and isState != ''">
+                AND tv.is_state = #{isState}
+            </if>
+        </where>
+    </select>
+
     <select id="selectTVisitListById" parameterType="Long" resultMap="TVisitResult">
         <include refid="selectTVisitVo"></include>
         <where>
@@ -103,7 +142,11 @@
         <if test="incentive != null and incentive != ''">incentive,</if>
         <if test="nyha != null and nyha != ''">nyha,</if>
         <if test="isState != null">is_state,</if>
-        create_time
+        <if test="results != null and results != ''">results,</if>
+        <if test="doctorName != null and doctorName !=''">doctor_name,</if>
+        <if test="doctorId != null and doctorId != ''">doctor_id,</if>
+        create_time,
+        date
         )
         values (
         <if test="symptoms != null and symptoms != ''">#{symptoms},</if>
@@ -116,6 +159,10 @@
         <if test="incentive != null and incentive != ''">#{incentive},</if>
         <if test="nyha != null and nyha != ''">#{nyha},</if>
         <if test="isState != null">#{isState},</if>
+        <if test="results != null and results != ''">#{results},</if>
+        <if test="doctorName != null and doctorName !=''">#{doctorName},</if>
+        <if test="doctorId != null and doctorId != ''">#{doctorId},</if>
+        sysdate(),
         sysdate()
         )
     </insert>
@@ -130,6 +177,7 @@
             <if test="incentive != null and incentive != ''">incentive = #{incentive},</if>
             <if test="nyha != null and nyha != ''">nyha = #{nyha},</if>
             <if test="results != null and results != ''">results = #{results},</if>
+            <if test="visitStatus != null and visitStatus != ''">#{visitStatus},</if>
             update_time = sysdate()
         </set>
         where id = #{id}

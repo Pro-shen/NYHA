@@ -88,9 +88,83 @@ public class TFollow extends BaseEntity {
     private Integer followStatus;
 
     /**
+     * 请求状态
+     */
+    private Integer visitStatus;
+
+    /**
      * ids
      */
     private List<Long> ids;
+
+    /**
+     * nickName
+     */
+    private String nickName;
+
+    /**
+     * nickId
+     */
+    private Long userId;
+
+    /**
+     * 有无诱因
+     */
+    private String incentive;
+
+    /**
+     * NYHA评估
+     */
+    private String nyha;
+
+    /**
+     * 就诊结果
+     */
+    private String results;
+
+    /**
+     * 用药的依从性
+     */
+    private Integer compliance;
+
+    /**
+     * 就诊状态特征
+     */
+    private String symptoms;
+
+    /**
+     * 心理状态
+     */
+    private String psychology;
+
+    /**
+     * 生活方式
+     */
+    private String lifeStyle;
+
+    public String getIncentive() {
+        return incentive;
+    }
+
+    public void setIncentive(String incentive) {
+        this.incentive = incentive;
+    }
+
+    public String getNyha() {
+        return nyha;
+    }
+
+    public void setNyha(String nyha) {
+        this.nyha = nyha;
+    }
+
+    public String getResults() {
+        return results;
+    }
+
+    public void setResults(String results) {
+        this.results = results;
+    }
 
     public Long getId() {
         return id;
@@ -214,5 +288,63 @@ public class TFollow extends BaseEntity {
 
     public void setIds(List<Long> ids) {
         this.ids = ids;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+
+
+    public String getSymptoms() {
+        return symptoms;
+    }
+
+    public void setSymptoms(String symptoms) {
+        this.symptoms = symptoms;
+    }
+
+    public String getPsychology() {
+        return psychology;
+    }
+
+    public void setPsychology(String psychology) {
+        this.psychology = psychology;
+    }
+
+    public Integer getCompliance() {
+        return compliance;
+    }
+
+    public void setCompliance(Integer compliance) {
+        this.compliance = compliance;
+    }
+
+    public String getLifeStyle() {
+        return lifeStyle;
+    }
+
+    public void setLifeStyle(String lifeStyle) {
+        this.lifeStyle = lifeStyle;
+    }
+
+    public Integer getVisitStatus() {
+        return visitStatus;
+    }
+
+    public void setVisitStatus(Integer visitStatus) {
+        this.visitStatus = visitStatus;
     }
 }

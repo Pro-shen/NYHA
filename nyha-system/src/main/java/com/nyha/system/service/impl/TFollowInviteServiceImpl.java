@@ -33,13 +33,22 @@ public class TFollowInviteServiceImpl implements ITFollowInviteService {
     }
 
     @Override
+    @DataScope(deptAlias = "u")
+    public List<SysUser> selectUserList(TFollow tFollow) {
+        return sysUserMapper.selectUser(tFollow);
+    }
+
+    @Override
     public int add(TFollow tFollow) {
         return tFollowInviteMapper.add(tFollow);
     }
 
     @Override
     public List<TFollow> selectTVisitListById(Long id) {
-        return tFollowInviteMapper.selectTFollowListById(id);
+        List<TFollow> tFollows = tFollowInviteMapper.selectTFollowListById(id);
+        tFollows.get(0).setNickName(tFollows.get(0).getPatientName());
+        tFollows.get(0).setUserId(tFollows.get(0).getPatientId());
+        return tFollows;
     }
 
     @Override

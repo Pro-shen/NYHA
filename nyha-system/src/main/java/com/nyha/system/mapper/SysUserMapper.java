@@ -1,6 +1,8 @@
 package com.nyha.system.mapper;
 
 import java.util.List;
+
+import com.nyha.system.domain.TFollow;
 import org.apache.ibatis.annotations.Param;
 import com.nyha.common.core.domain.entity.SysUser;
 
@@ -34,6 +36,11 @@ public interface SysUserMapper
      * @return 用户信息集合信息
      */
     public List<SysUser> selectUnallocatedList(SysUser user);
+
+    /**
+     *
+     */
+    public List<SysUser> selectUser(TFollow tFollow);
 
     /**
      * 通过用户名查询用户

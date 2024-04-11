@@ -70,6 +70,8 @@
         update t_follow tf
         <set>
             <if test="date != null">tf.date = #{date},</if>
+            <if test="visitId = null">tf.visit_id = #{visitId},</if>
+            <if test="followStatus != null">tf.follow_status = #{followStatus},</if>
             tf.update_time = sysdate()
         </set>
         where tf.id = #{id}

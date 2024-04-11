@@ -12,18 +12,18 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
           v-hasPermi="['nyha:tFollowDetails:add']">新增</el-button>
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
           v-hasPermi="['nyha:tFollowDetails:edit']">修改</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
           v-hasPermi="['nyha:tFollowDetails:remove']">删除</el-button>
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
           v-hasPermi="['nyha:tFollowDetails:export']">导出</el-button>
@@ -48,8 +48,8 @@
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
             v-hasPermi="['nyha:tFollowDetails:edit']">修改</el-button>
-          <el-button v-if="scope.row.parentId != 0" size="mini" type="text" icon="el-icon-delete"
-            @click="handleDelete(scope.row)" v-hasPermi="['nyha:tFollowDetails:remove']">删除</el-button>
+          <!-- <el-button v-if="scope.row.parentId != 0" size="mini" type="text" icon="el-icon-delete"
+            @click="handleDelete(scope.row)" v-hasPermi="['nyha:tFollowDetails:remove']">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -58,11 +58,25 @@
       @pagination="getList" />
 
     <!-- 添加或修改菜单配置对话框 -->
-    <el-dialog title="就诊请求" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog title="随访结果" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="请求日期" prop="date">
-          <el-date-picker v-model="form.date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
-          </el-date-picker>
+        <el-form-item label="有无诱因" prop="incentive">
+          <el-input v-model="form.incentive" placeholder="请输入诱因" />
+        </el-form-item>
+        <el-form-item label="NYHA评估" prop="nyha">
+          <el-input v-model="form.nyha" placeholder="请输入NYHA评估" />
+        </el-form-item>
+        <el-form-item label="就诊结果" prop="results">
+          <el-input v-model="form.results" placeholder="请输入就诊结果" />
+        </el-form-item>
+        <el-form-item label="依从性" prop="compliance">
+          <el-input v-model="form.compliance" placeholder="用药的依从性不能为空"/>
+        </el-form-item>
+        <el-form-item label="状态特征" prop="symptoms">
+          <el-input v-model="form.symptoms" placeholder="就诊状态特征不能为空"/>
+        </el-form-item>
+        <el-form-item label="心理状态" prop="psychology">
+          <el-input v-model="form.psychology" placeholder="心理状态不能为空"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -105,9 +119,24 @@ export default {
       dateList: [],
       patientNameList: [],
       rules: {
-        date: [
-          { required: true, message: "请求日期不能为空", trigger: "blur" }
+        incentive: [
+          { required: true, message: "诱因不能为空", trigger: "blur" }
         ],
+        nyha: [
+          { required: true, message: "NYHA评估不能为空", trigger: "blur" }
+        ],
+        results: [
+          { required: true, message: "就诊结果不能为空", trigger: "blur" }
+        ],
+        compliance: [
+          { required: true, message: "用药的依从性不能为空", trigger: "blur" }
+        ],
+        symptoms: [
+          { required: true, message: "就诊状态特征不能为空", trigger: "blur" }
+        ],
+        psychology: [
+          { required: true, message: "心理状态不能为空", trigger: "blur" }
+        ]
       }
     }
   },
@@ -153,10 +182,11 @@ export default {
       })
     },
     submitForm() {
-      this.form.isState = 1
+      this.form.isState = 2
       this.form.patientId = this.userId
       this.form.patientName = this.userName
-      this.form.followStatus = 0
+      this.form.followStatus = 2
+      this.form.visitStatus = 2
       this.open = false
       this.$refs["form"].validate(valid => {
         if (valid) {

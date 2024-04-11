@@ -44,6 +44,15 @@ public class TFollowInviteController extends BaseController {
 
     @PreAuthorize("@ss.hasAnyPermi('nyha:tFollowDetails:add')")
     @Log(title = "寻访增加", businessType = BusinessType.INSERT)
+    @PostMapping("/selectUserList")
+    public AjaxResult selectUserList(@Validated @RequestBody TFollow tFollow){
+        AjaxResult ajax = new AjaxResult();
+        ajax.put("data",itFollowInviteService.selectUserList(tFollow));
+        return ajax;
+    }
+
+    @PreAuthorize("@ss.hasAnyPermi('nyha:tFollowDetails:add')")
+    @Log(title = "寻访增加", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     public AjaxResult add(@Validated @RequestBody TFollow tFollow){
         AjaxResult ajax = new AjaxResult();

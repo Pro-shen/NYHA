@@ -14,20 +14,20 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-          v-hasPermi="['nyha:tFollowInvite:add']">新增</el-button>
+          v-hasPermi="['nyha:tFollowInvite:add']">添加邀请</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
-          v-hasPermi="['nyha:tFollowInvite:edit']">修改</el-button>
+          v-hasPermi="['nyha:tFollowInvite:edit']">修改邀请</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
-          v-hasPermi="['nyha:tFollowInvite:remove']">删除</el-button>
+          v-hasPermi="['nyha:tFollowInvite:remove']">删除邀请</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
           v-hasPermi="['nyha:tFollowInvite:export']">导出</el-button>
-      </el-col>
+      </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -47,9 +47,9 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['nyha:tFollowInvite:edit']">修改</el-button>
+            v-hasPermi="['nyha:tFollowInvite:edit']">修改邀请</el-button>
           <el-button v-if="scope.row.parentId != 0" size="mini" type="text" icon="el-icon-delete"
-            @click="handleDelete(scope.row)" v-hasPermi="['nyha:tFollowInvite:remove']">删除</el-button>
+            @click="handleDelete(scope.row)" v-hasPermi="['nyha:tFollowInvite:remove']">删除邀请</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -60,6 +60,12 @@
     <!-- 添加或修改菜单配置对话框 -->
     <el-dialog title="就诊请求" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="选择随访人">
+          <el-select v-model="form.userId" placeholder="请选择随访人">
+            <el-option v-for="item in userList" :key="item.nickName" :label="item.nickName"
+              :value="item.userId"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="请求日期" prop="date">
           <el-date-picker v-model="form.date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
           </el-date-picker>
@@ -75,7 +81,7 @@
 </template>
 
 <script>
-import { list, getUserId, add, selectTFollowListById, edit, remove } from "@/api/nyha/tFollowInvite"
+import { list, getUserId, add, selectTFollowListById, edit, remove, selectUserList } from "@/api/nyha/tFollowInvite"
 import Cookies from "js-cookie";
 export default {
   dicts: ['t_follow_follow_status'],
@@ -104,9 +110,13 @@ export default {
       ids: [],
       dateList: [],
       patientNameList: [],
+      userList: [],
       rules: {
         date: [
           { required: true, message: "请求日期不能为空", trigger: "blur" }
+        ],
+        nickName: [
+          { required: true, message: "请求随访人不能为空", trigger: "blur" }
         ],
       }
     }
@@ -129,6 +139,9 @@ export default {
         this.loading = false
         this.total = response.total
       })
+      selectUserList(this.queryParams).then(response => {
+        this.userList = response.data
+      })
     },
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
@@ -149,14 +162,21 @@ export default {
       const id = row.id || this.ids
       this.form.id = id
       selectTFollowListById(id).then(res => {
+        console.log(res)
         this.form = res.data[0]
       })
     },
     submitForm() {
       this.form.isState = 1
-      this.form.patientId = this.userId
-      this.form.patientName = this.userName
-      this.form.followStatus = 0
+      this.form.patientId = this.form.userId
+      this.form.patientName = ""
+      for (var i = 0; i < this.userList.length; i++) {
+        if (this.userList[i].userId == this.form.userId) {
+          this.form.patientName = this.userList[i].nickName
+          break
+        }
+      }
+      this.form.followStatus = 3
       this.open = false
       this.$refs["form"].validate(valid => {
         if (valid) {

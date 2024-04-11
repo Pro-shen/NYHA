@@ -9,6 +9,8 @@ public interface TVisitDetailsMapper {
 
     public List<TVisit> list(TVisit tVisit);
 
+    public List<TVisit> selectTVisitList(TVisit tVisit);
+
     public int add(TVisit tVisit);
 
     public List<TVisit> selectTVisitListById(Long id);

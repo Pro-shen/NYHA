@@ -15,13 +15,21 @@ export function getUserId(userName) {
   });
 }
 
+export function selectUserList(data) {
+  return request({
+    url: "/nyha/tFollowInvite/selectUserList",
+    method: "post",
+    data: data,
+  });
+}
+
 export function add(data) {
-    return request({
-      url: "/nyha/tFollowInvite/add",
-      method: "post",
-      data: data,
-    });
-  }
+  return request({
+    url: "/nyha/tFollowInvite/add",
+    method: "post",
+    data: data,
+  });
+}
 
 export function selectTFollowListById(id) {
   return request({

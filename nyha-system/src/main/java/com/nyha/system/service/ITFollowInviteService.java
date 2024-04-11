@@ -11,6 +11,8 @@ public interface ITFollowInviteService {
 
     public SysUser getUserId(String userName);
 
+    public List<SysUser> selectUserList(TFollow tFollow);
+
     public int add(TFollow tFollow);
 
     public List<TFollow> selectTVisitListById(Long id);

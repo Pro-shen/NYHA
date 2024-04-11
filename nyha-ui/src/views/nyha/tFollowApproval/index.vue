@@ -12,22 +12,22 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
           v-hasPermi="['nyha:tFollowApproval:add']">新增</el-button>
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
-          v-hasPermi="['nyha:tFollowApproval:edit']">修改</el-button>
+          v-hasPermi="['nyha:tFollowApproval:edit']">审批</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
           v-hasPermi="['nyha:tFollowApproval:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
           v-hasPermi="['nyha:tFollowApproval:export']">导出</el-button>
-      </el-col>
+      </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -47,9 +47,9 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['nyha:tFollowApproval:edit']">修改</el-button>
-          <el-button v-if="scope.row.parentId != 0" size="mini" type="text" icon="el-icon-delete"
-            @click="handleDelete(scope.row)" v-hasPermi="['nyha:tFollowApproval:remove']">删除</el-button>
+            v-hasPermi="['nyha:tFollowApproval:edit']">审批</el-button>
+          <!-- <el-button v-if="scope.row.parentId != 0" size="mini" type="text" icon="el-icon-delete"
+            @click="handleDelete(scope.row)" v-hasPermi="['nyha:tFollowApproval:remove']">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -58,12 +58,9 @@
       @pagination="getList" />
 
     <!-- 添加或修改菜单配置对话框 -->
-    <el-dialog title="就诊请求" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog title="随访审批" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="请求日期" prop="date">
-          <el-date-picker v-model="form.date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
-          </el-date-picker>
-        </el-form-item>
+        是否确认随访
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -104,11 +101,6 @@ export default {
       ids: [],
       dateList: [],
       patientNameList: [],
-      rules: {
-        date: [
-          { required: true, message: "请求日期不能为空", trigger: "blur" }
-        ],
-      }
     }
   },
   created() {
@@ -156,7 +148,7 @@ export default {
       this.form.isState = 1
       this.form.patientId = this.userId
       this.form.patientName = this.userName
-      this.form.followStatus = 0
+      this.form.followStatus = 1
       this.open = false
       this.$refs["form"].validate(valid => {
         if (valid) {
